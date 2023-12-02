@@ -102,7 +102,7 @@ app.post("/api/register", async (req, res) => {
 
        app.get("/api/orders", async (req, res) => {
         try {
-          const orders = await stripe.orders.list();
+          const orders = await stripe.issuing.transactions.list();
       
           res.json(orders.data);
         } catch (error) {
