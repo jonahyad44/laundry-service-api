@@ -27,14 +27,21 @@ app.use(cookieParser());
 app.use(bodyParser());
 
 app.post("/api/register", async (req, res) => {
-    const { username, password } = req.body;
-
-  // Perform user registration logic here (e.g., save to the database)
-  // For simplicity, let's just log the received data
-  console.log("Received registration request:", { username, password });
-
-  // Respond to the client (you might send a success or error response)
-  res.status(200).send("Registration successful");
+  try {
+    const username = req.body.username;
+    console.log("Req Recieved");
+    const hashedPass = await bcrypt.hash(req.body.password, 10);
+    console.log("Pass hashed");
+    await prisma.admin.create({
+      data: {
+        username: username,
+        password: hashedPass,
+      },
+    });
+    res.status(201).send();
+  } catch {
+    res.status(500).send();
+  }
   });
 
   app.post("/api/login", async (req: Request, res: Response) => {
@@ -72,13 +79,14 @@ app.post("/api/register", async (req, res) => {
   });
 
       app.post("/api/submitorder", async (req: Request, res: Response) => {
-        try {     
-          // Respond to the client (you might send a success or error response)
-          res.status(200).json({ message: "Form submission successful" });
-        } catch (error) {
-          console.error("Error during form submission:", error);
-          res.status(500).json({ message: "Internal server error" });
-        }
+        try {   
+          const formData = req.body.formValues;
+          console.log(formData);
+      res.status(200).json({ message: "Form submission successful" });
+    } catch (error) {
+      console.error("Error during form submission:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
       });
 
       app.post("/api/contactform", async (req, res) => {
@@ -103,8 +111,8 @@ app.post("/api/register", async (req, res) => {
        app.get("/api/orders", async (req, res) => {
         try {
           const orders = await stripe.issuing.transactions.list();
-      
           res.json(orders.data);
+          console.log(req.body);
         } catch (error) {
           console.error("Error retriveing orders:", error);
           res.status(500).json({ error: 'Server error' });
