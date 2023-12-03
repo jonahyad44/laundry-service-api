@@ -9,6 +9,8 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const cookieParser = require("cookie-parser");
 const bodyParser = require('body-parser');
+const { createProxyMiddleware } = require('http-proxy-middleware');
+
 
 
 const prisma = new PrismaClient();
@@ -117,12 +119,22 @@ app.post("/api/register", async (req, res) => {
           res.status(500).json({ error: 'Server error' });
         }
       });
+
+      module.exports = function(app) {
+        app.use(
+          "/api",
+          createProxyMiddleware({
+            target: "http://localhost:8080",
+            changeOrigin: true,
+          })
+        );
+      };
          
 
        
     
-app.listen(3001, () => {
-    console.log("Server is ready at http://localhost:3001");
+app.listen(8080, () => {
+    console.log("Server is ready at http://localhost:8080");
 });
 
 module.exports = app;
