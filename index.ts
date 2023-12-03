@@ -9,6 +9,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const cookieParser = require("cookie-parser");
 const bodyParser = require('body-parser');
+const port = 3000
 
 
 
@@ -123,8 +124,8 @@ app.post("/api/register", async (req, res) => {
 
        
     
-app.listen(8080, () => {
-    console.log("Server is ready at http://localhost:8080");
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
 });
 
 module.exports = app;
