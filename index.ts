@@ -25,6 +25,7 @@ app.use(express.json());
 app.use(express.static('public'));
 app.use(cors());
 app.use(cookieParser());
+app.use(bodyParser.json());
 app.use(bodyParser());
 
 app.post("/api/register", async (req, res) => {
