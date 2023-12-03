@@ -9,7 +9,6 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const cookieParser = require("cookie-parser");
 const bodyParser = require('body-parser');
-const { createProxyMiddleware } = require('http-proxy-middleware');
 
 
 
@@ -120,15 +119,6 @@ app.post("/api/register", async (req, res) => {
         }
       });
 
-      module.exports = function(app) {
-        app.use(
-          "/api",
-          createProxyMiddleware({
-            target: "http://localhost:8080",
-            changeOrigin: true,
-          })
-        );
-      };
          
 
        
