@@ -9,7 +9,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const cookieParser = require("cookie-parser");
 const bodyParser = require('body-parser');
-const port = 3000
+const port = 5173
 
 
 
