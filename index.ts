@@ -12,7 +12,6 @@ const bodyParser = require('body-parser');
 
 
 const prisma = new PrismaClient();
-const port = 3001;
 const app = express();
 const stripe = new Stripe('sk_test_51ODvYwDEtVoGXwUaSYKqzFhtt9WYjxTh3D3kJtxMGkWvZGeEni0VDmgAXkiG28VRCcMlqEnCRwB9CqcgbDE2bURW00JW1Wkp5g', {
     apiVersion: '2023-10-16', // Use the latest API version
@@ -122,8 +121,8 @@ app.post("/api/register", async (req, res) => {
 
        
     
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`)
+app.listen(3001, () => {
+    console.log("Server is ready at http://localhost:3001");
 });
 
 module.exports = app;
