@@ -113,7 +113,9 @@ app.post("/api/register", async (req, res) => {
 
        app.get("/api/orders", async (req, res) => {
         try {
-          const orders = await stripe.issuing.transactions.list();
+          const orders = await stripe.issuing.transactions.list({
+            limit: 10
+          },);
           res.json(orders.data);
           console.log(req.body);
         } catch (error) {
